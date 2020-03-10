@@ -10,5 +10,6 @@ setup(
     license='unlicense',
     packages=['pyjisa'],
     install_requires=['jpype1'],
+    include_package_data=True,
     zip_safe=False
 )
