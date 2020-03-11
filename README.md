@@ -35,3 +35,17 @@ channelA.turnOn()
 channelB.turnOn()
 
 ```
+
+To manually select which Java installation to use, supply the path to the folder it resides in to `load()` like so:
+
+```python
+import pyjisa
+pyjisa.load("/usr/lib/jvm/java-13-openjdk-amd64")
+```
+
+or
+
+```python
+import pyjisa
+pyjisa.load("C:\\Program Files\\AdoptOpenJDK\\jdk-13.0.2.8-hotspot")
+```
