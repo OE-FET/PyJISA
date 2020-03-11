@@ -7,16 +7,19 @@ To install:
 pip install git+https://github.com/OE-FET/PyJISA.git
 ```
 
-Then in Python, simply import `pyjisa`:
+Then in Python, simply import `pyjisa` and call `pyjisa.load()`:
 
 ```python
 import pyjisa
+pyjisa.load()
 ```
 
 to start being able to import and use JISA classes:
 
 ```python
 import pyjisa
+pyjisa.load()
+
 from jisa.devices import K2600B
 from jisa.addresses import GPIBAddress
 
