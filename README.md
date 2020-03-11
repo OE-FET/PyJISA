@@ -21,9 +21,9 @@ import pyjisa
 pyjisa.load()
 
 from jisa.devices import K2600B
-from jisa.addresses import GPIBAddress
+from jisa.addresses import TCPIPAddress
 
-smu = K2600B(GPIBAddress(24))
+smu = K2600B(TCPIPAddress("192.168.0.5"))
 
 channelA = smu.getChannel(0)
 channelB = smu.getChannel(1)
