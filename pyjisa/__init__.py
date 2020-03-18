@@ -2,6 +2,7 @@
 import os
 import jpype
 import jpype.imports
+from jpype import JProxy
 
 path = os.path.dirname(os.path.realpath(__file__))
 
@@ -29,3 +30,17 @@ def load(jvmPath=None):
 
     # Start the JVM
     jpype.startJVM(jvmpath=complete, convertStrings=True)
+    
+    
+def toRunnable(function):
+    from jisa.control import SRunnable
+    return SRunnable.fromJProxy(JProxy("java.lang.Runnable", dict={"run": function}))
+
+
+def toPredicate(function):
+    return JProxy("java.util.function.Predicate", dict={"test": function})
+
+
+def toEvaluable(function):
+    return JProxy("jisa.experiment.ResultTable.Evaluable", dict={"evaluate": function})
+
