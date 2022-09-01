@@ -9,7 +9,7 @@ path = os.path.dirname(os.path.realpath(__file__))
 
 def load(jvmPath=None):
 
-    if !os.path.exists(os.path.join(path, "JISA.jar")):
+    if not os.path.exists(os.path.join(path, "JISA.jar")):
         updateJISA()
     
     complete = ""
