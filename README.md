@@ -7,13 +7,6 @@ To install:
 pip install git+https://github.com/OE-FET/PyJISA.git
 ```
 
-Before doing anything else after installing, open a python console and make sure to update the copy of JISA that PyJISA will use by calling `updateJISA()` like so:
-
-```python
-import pyjisa
-pyjisa.updateJISA()
-```
-
 Now whenever you want to use JISA in Python, simply import `pyjisa` and call `pyjisa.load()`:
 
 ```python
@@ -41,6 +34,13 @@ channelB.setCurrent(500e-3)
 channelA.turnOn()
 channelB.turnOn()
 
+```
+
+The first time you do this, it will download the JISA.jar file (which may take a few seconds). If you want to update the library in the future then just call `updateJISA()` like so:
+
+```python
+import pyjisa
+pyjisa.updateJISA()
 ```
 
 To manually select which Java installation to use, supply the path to the folder it resides in to `load()` like so:
