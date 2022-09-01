@@ -7,7 +7,14 @@ To install:
 pip install git+https://github.com/OE-FET/PyJISA.git
 ```
 
-Then in Python, simply import `pyjisa` and call `pyjisa.load()`:
+Before doing anything else after installing, make sure to update the copy of JISA that PyJISA will use by calling `updateJISA()`:
+
+```python
+import pyjisa
+pyjisa.updateJISA()
+```
+
+Now whenever you want to use JISA in Python, simply import `pyjisa` and call `pyjisa.load()`:
 
 ```python
 import pyjisa
@@ -48,11 +55,4 @@ or
 ```python
 import pyjisa
 pyjisa.load("C:\\Program Files\\AdoptOpenJDK\\jdk-13.0.2.8-hotspot")
-```
-
-To update the copy of JISA that PyJISA uses, you can do the following:
-
-```python
-import pyjisa
-pyjisa.updateJISA()
 ```
