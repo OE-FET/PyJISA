@@ -8,6 +8,9 @@ from jpype import JProxy
 path = os.path.dirname(os.path.realpath(__file__))
 
 def load(jvmPath=None):
+
+    if (!os.path.exists(os.path.join(path, "JISA.jar"))):
+        updateJISA()
     
     complete = ""
     
@@ -33,7 +36,7 @@ def load(jvmPath=None):
     jpype.startJVM(jvmpath=complete, convertStrings=True)
 
 def updateJISA():
-    print("Downloading latest JISA.jar library...")
+    print("Downloading latest JISA.jar library...", end=" ")
     urllib.request.urlretrieve("https://github.com/OE-FET/JISA/raw/master/JISA.jar", os.path.join(path, "JISA.jar"))
     print("Done.")
     
