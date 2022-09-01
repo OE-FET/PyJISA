@@ -7,7 +7,7 @@ To install:
 pip install git+https://github.com/OE-FET/PyJISA.git
 ```
 
-Before doing anything else after installing, make sure to update the copy of JISA that PyJISA will use by calling `updateJISA()`:
+Before doing anything else after installing, open a python console and make sure to update the copy of JISA that PyJISA will use by calling `updateJISA()` like so:
 
 ```python
 import pyjisa
