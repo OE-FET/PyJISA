@@ -1,5 +1,5 @@
 # PyJISA
-Python package for easily setting up JISA for use in a python environment using JPype.
+Python package for easily setting up JISA for use in a CPython (i.e. normal Python) environment using JPype.
 
 To install:
 
