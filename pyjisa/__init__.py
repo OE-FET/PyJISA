@@ -36,7 +36,7 @@ def load(jvmPath=None):
     jpype.startJVM(jvmpath=complete, convertStrings=True)
 
 def updateJISA():
-    print("Downloading latest JISA.jar library...", end=" ")
+    print("Downloading latest JISA.jar library...", end=" ", flush=True)
     urllib.request.urlretrieve("https://github.com/OE-FET/JISA/raw/master/JISA.jar", os.path.join(path, "JISA.jar"))
     print("Done.")
     
