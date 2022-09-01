@@ -13,3 +13,8 @@ setup(
     include_package_data=True,
     zip_safe=False
 )
+
+import pyjisa
+print("Downloading latest JISA.jar...")
+pyjisa.updateJISA()
+print("Done.")
