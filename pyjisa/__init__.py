@@ -42,26 +42,21 @@ def updateJISA():
     print("Done.")
 
 
-class Runnable(JProxy):
-    def __init__(self, function):
-        super().__init__("java.lang.Runnable", dict={"run": function})
+def Runnable(function):
+    return JProxy("java.lang.Runnable", dict={"run": function})
 
 
-class Task(JProxy):
-    def __init__(self, function):
-        super().__init__("jisa.control.RTask.Task", dict={"run": function})
+def Task(function):
+    return JProxy("jisa.control.RTask.Task", dict={"run": function})
 
 
-class SRunnable(JProxy):
-    def __init__(self, function):
-        super().__init__("java.control.SRunnable", dict={"run": function})
+def SRunnable(function):
+    return JProxy("java.control.SRunnable", dict={"run": function})
 
 
-class Predicate(JProxy):
-    def __init__(self, function):
-        super().__init__("java.util.function.Predicate", dict={"test": function})
+def Predicate(function):
+    return JProxy("java.util.function.Predicate", dict={"test": function})
 
 
-class RowEvaluable(JProxy):
-    def __init__(self, function):
-        super().__init__("jisa.results.RowEvaluable", dict={"evaluate": function})
+def RowEvaluable(function):
+    return JProxy("jisa.results.RowEvaluable", dict={"evaluate": function})
