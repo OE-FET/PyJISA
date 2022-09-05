@@ -101,4 +101,4 @@ def doSomething():
 
 ```
 
-The same exists for other functional interfaces (e.g. `Predicate`, `RowEvaluable`, `Task', and `Runnable`)
+The same exists for other functional interfaces (e.g. `Predicate`, `RowEvaluable`, `Task`, and `Runnable`)
