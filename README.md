@@ -71,6 +71,9 @@ grid.addToolbarButton("Button Text", this::methodName)
 To achieve the same in PyJISA, you must wrap your lambda or method reference in the `SRunnable(...)` factory method like so:
 
 ```python
+from jisa.gui import Grid
+from pyjisa import SRunnable
+
 grid = Grid("Title")
 
 grid.addToolbarButton("Button Text", SRunnable(lambda: ...))
