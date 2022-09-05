@@ -56,3 +56,25 @@ or
 import pyjisa
 pyjisa.load("C:\\Program Files\\AdoptOpenJDK\\jdk-13.0.2.8-hotspot")
 ```
+
+## Functional Interfaces
+
+Due to some limitation in `JPype`, you will need to use the provided wrapper functions to pass lambdas to many methods in `JISA`. For instance, most GUI elements in `JISA` take `SRunnable` objects to define what should happen upon an event occurring (such as a button click):
+
+```java
+Grid grid = new Grid("Title");
+
+grid.addToolbarButton("Button Text", () -> { ... })
+grid.addToolbarButton("Button Text", this::methodName)
+```
+
+To achieve the same in PyJISA, you must wrap your lambda or method reference in the `SRunnable(...)` factory method like so:
+
+```python
+grid = Grid("Title")
+
+grid.addToolbarButton("Button Text", SRunnable(lambda: ...))
+grid.addToolbarButton("Button Text", SRunnable(methodName))
+```
+
+The same exists for other functional interfaces (e.g. `Predicate`, `RowEvaluable`, `Task', and `Runnable`)
