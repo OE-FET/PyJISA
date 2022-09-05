@@ -62,10 +62,24 @@ pyjisa.load("C:\\Program Files\\AdoptOpenJDK\\jdk-13.0.2.8-hotspot")
 Due to some limitation in `JPype`, you will need to use the provided wrapper functions to pass lambdas to many methods in `JISA`. For instance, most GUI elements in `JISA` take `SRunnable` objects to define what should happen upon an event occurring (such as a button click):
 
 ```java
-Grid grid = new Grid("Title");
+import jisa.gui.Grid
 
-grid.addToolbarButton("Button Text", () -> { ... })
-grid.addToolbarButton("Button Text", this::methodName)
+class Main {
+
+  public static void main(String[] args) {
+  
+    Grid grid = new Grid("Title");
+
+    grid.addToolbarButton("Button Text", () -> { ... })
+    grid.addToolbarButton("Button Text", Main::doSomething)
+    
+  }
+  
+  public static void doSomething() {
+    // Do something
+  }
+
+}
 ```
 
 To achieve the same in PyJISA, you must wrap your lambda or method reference in the `SRunnable(...)` factory method like so:
@@ -74,10 +88,17 @@ To achieve the same in PyJISA, you must wrap your lambda or method reference in 
 from jisa.gui import Grid
 from pyjisa import SRunnable
 
-grid = Grid("Title")
+def main():
+  grid = Grid("Title")
 
-grid.addToolbarButton("Button Text", SRunnable(lambda: ...))
-grid.addToolbarButton("Button Text", SRunnable(methodName))
+  grid.addToolbarButton("Button Text", SRunnable(lambda: ...))
+  grid.addToolbarButton("Button Text", SRunnable(doSomething))
+
+
+def doSomething():
+  # Do something
+
+
 ```
 
 The same exists for other functional interfaces (e.g. `Predicate`, `RowEvaluable`, `Task', and `Runnable`)
