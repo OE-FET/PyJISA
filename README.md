@@ -70,8 +70,8 @@ class Main {
   
     Grid grid = new Grid("Title");
 
-    grid.addToolbarButton("Button Text", () -> { ... })
-    grid.addToolbarButton("Button Text", Main::doSomething)
+    grid.addToolbarButton("Button Text", () -> { ... });
+    grid.addToolbarButton("Button Text", Main::doSomething);
     
   }
   
