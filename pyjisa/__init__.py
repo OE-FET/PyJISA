@@ -3,60 +3,54 @@ import os
 import jpype
 import jpype.imports
 import urllib.request
+import atexit
 from jpype import JProxy
 
 path = os.path.dirname(os.path.realpath(__file__))
 
-
 def load(jvmPath=None):
-    if not os.path.exists(os.path.join(path, "JISA.jar")):
-        updateJISA()
 
-    complete = ""
+    if not jpype.isJVMStarted():
 
-    if jvmPath is None:
-        complete = jpype.getDefaultJVMPath()
-    else:
-        linux = os.path.join(jvmPath, "lib", "server", "libjvm.so")
-        win = os.path.join(jvmPath, "bin", "server", "jvm.dll")
-        mac = os.path.join(jvmPath, "lib", "server", "libjvm.dylib")
+        if not os.path.exists(os.path.join(path, "JISA.jar")):
+            updateJISA()
 
-        if os.path.exists(linux):
-            complete = linux
-        elif os.path.exists(win):
-            complete = win
-        elif os.path.exists(mac):
-            complete = mac
+        complete = ""
 
-    # Link in JISA.jar classes
-    jpype.addClassPath(os.path.join(path, "JISA.jar"))
-    jpype.imports.registerDomain("jisa")
+        if jvmPath is None:
+            complete = jpype.getDefaultJVMPath()
+        else:
+            linux = os.path.join(jvmPath, "lib", "server", "libjvm.so")
+            win = os.path.join(jvmPath, "bin", "server", "jvm.dll")
+            mac = os.path.join(jvmPath, "lib", "server", "libjvm.dylib")
 
-    # Start the JVM
-    jpype.startJVM(jvmpath=complete, convertStrings=True)
+            if os.path.exists(linux):
+                complete = linux
+            elif os.path.exists(win):
+                complete = win
+            elif os.path.exists(mac):
+                complete = mac
+
+        # Link in JISA.jar classes
+        jpype.addClassPath(os.path.join(path, "JISA.jar"))
+        jpype.imports.registerDomain("jisa")
+
+        # Start the JVM
+        jpype.startJVM(jvmpath=complete, convertStrings=True)
+
+        atexit.register(shutdown)
+
+
+def shutdown():
+    
+    from jisa.gui import GUI
+    GUI.stopGUI()
+    jpype.shutdownJVM()
 
 
 def updateJISA():
+    
     print("Downloading latest JISA.jar library...", end=" ", flush=True)
     urllib.request.urlretrieve("https://github.com/OE-FET/JISA/raw/master/JISA.jar", os.path.join(path, "JISA.jar"))
     print("Done.")
 
-
-def Runnable(function):
-    return JProxy("java.lang.Runnable", dict={"run": function})
-
-
-def Task(function):
-    return JProxy("jisa.control.RTask.Task", dict={"run": function})
-
-
-def SRunnable(function):
-    return JProxy("java.control.SRunnable", dict={"run": function})
-
-
-def Predicate(function):
-    return JProxy("java.util.function.Predicate", dict={"test": function})
-
-
-def RowEvaluable(function):
-    return JProxy("jisa.results.RowEvaluable", dict={"evaluate": function})
