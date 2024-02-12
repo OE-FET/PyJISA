@@ -56,3 +56,18 @@ or
 import pyjisa
 pyjisa.load("C:\\Program Files\\AdoptOpenJDK\\jdk-13.0.2.8-hotspot")
 ```
+
+If you have GUI elements open, then you may find that you need to tell python to wait for the GUI to be stopped like so:
+
+```python
+import pyjisa; pyjisa.load();
+
+from jisa.gui import GUI, Plot
+
+plot = Plot("Title", "X", "Y")
+plot.setExitOnClose(True)
+plot.show()
+
+# If we don't do this, python will quit and close the GUI immediately
+GUI.waitForExit()
+```
