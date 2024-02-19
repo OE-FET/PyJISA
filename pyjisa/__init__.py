@@ -10,10 +10,10 @@ path = os.path.dirname(os.path.realpath(__file__))
 
 def load(jvmPath=None):
 
-    if not jpype.isJVMStarted():
+    if jpype.isJVMStarted() and (os.path.join(path, "JISA.jar") not in jpype.getClassPath()):
+        jpype.shutdownJVM()
 
-        if not os.path.exists(os.path.join(path, "JISA.jar")):
-            updateJISA()
+    if not jpype.isJVMStarted():
 
         complete = ""
 
@@ -31,10 +31,6 @@ def load(jvmPath=None):
             elif os.path.exists(mac):
                 complete = mac
 
-        # Link in JISA.jar classes
-        jpype.addClassPath(os.path.join(path, "JISA.jar"))
-        jpype.imports.registerDomain("jisa")
-
         # Start the JVM
         jpype.startJVM(jvmpath=complete, convertStrings=True)
 
@@ -43,9 +39,11 @@ def load(jvmPath=None):
 
 def shutdown():
     
-    from jisa.gui import GUI
-    GUI.stopGUI()
-    jpype.shutdownJVM()
+    if jpype.isJVMStarted():
+        
+        from jisa.gui import GUI
+        GUI.stopGUI()
+        jpype.shutdownJVM()
 
 
 def updateJISA():
@@ -54,3 +52,11 @@ def updateJISA():
     urllib.request.urlretrieve("https://github.com/OE-FET/JISA/raw/master/JISA.jar", os.path.join(path, "JISA.jar"))
     print("Done.")
 
+
+
+if not os.path.exists(os.path.join(path, "JISA.jar")):
+    updateJISA()
+
+# Link in JISA.jar classes
+jpype.addClassPath(os.path.join(path, "JISA.jar"))
+jpype.imports.registerDomain("jisa")
