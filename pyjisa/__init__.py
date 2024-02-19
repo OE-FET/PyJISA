@@ -10,9 +10,6 @@ path = os.path.dirname(os.path.realpath(__file__))
 
 def load(jvmPath=None):
 
-    if jpype.isJVMStarted() and (os.path.join(path, "JISA.jar") not in jpype.getClassPath()):
-        jpype.shutdownJVM()
-
     if not jpype.isJVMStarted():
 
         complete = ""
