@@ -23,10 +23,10 @@ pyjisa.load()
 from jisa.devices import K2600B
 from jisa.addresses import TCPIPAddress
 
-smu = K2600B(TCPIPAddress("192.168.0.5"))
+keithley = K2612B(TCPIPAddress("192.168.0.5"))
 
-channelA = smu.getChannel(0)
-channelB = smu.getChannel(1)
+channelA = keithley.getSMU(0)
+channelB = keithley.getSMU(1)
 
 channelA.setVoltage(5.0)
 channelB.setCurrent(500e-3)
