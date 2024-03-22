@@ -20,7 +20,7 @@ to start being able to import and use JISA classes:
 import pyjisa
 pyjisa.load()
 
-from jisa.devices import K2600B
+from jisa.devices.smu import K2612B
 from jisa.addresses import TCPIPAddress
 
 keithley = K2612B(TCPIPAddress("192.168.0.5"))
