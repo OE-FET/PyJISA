@@ -7,18 +7,27 @@ To install:
 pip install git+https://github.com/OE-FET/PyJISA.git
 ```
 
-Now whenever you want to use JISA in Python, simply import `pyjisa` and call `pyjisa.load()`:
+Now whenever you want to use JISA in Python, simply import `pyjisa.autoload`, like so:
 
 ```python
-import pyjisa
-pyjisa.load()
+import pyjisa.autoload
 ```
 
-to start being able to import and use JISA classes:
+The first time you do this, it will download the JISA.jar file (which may take a
+few seconds). Also, if pyjisa is unable to find one installed on your system, it
+may also download a Java Runtime Environment (JRE):
 
 ```python
-import pyjisa
-pyjisa.load()
+>>> import pyjisa.autoload
+Downloading latest JISA.jar library... Done.
+No Java Runtime Environment found on system, downloading JRE 11... Done.
+>>> _
+```
+
+After this, you're good to import `JISA` classes as if they were written in Python:
+
+```python
+import pyjisa.autoload
 
 from jisa.devices.smu import K2612B
 from jisa.addresses import TCPIPAddress
@@ -36,14 +45,7 @@ channelB.turnOn()
 
 ```
 
-The first time you do this, it will download the JISA.jar file (which may take a few seconds). If you don't have one installed, it may also download a Java Runtime Environment (JRE). If you want to update the library in the future then just call `updateJISA()` like so:
-
-```python
-import pyjisa
-pyjisa.updateJISA()
-```
-
-To manually select which Java installation to use, supply the path to the folder it resides in to `load()` like so:
+To manually select which Java installation to use, just import `pyjisa` (not `pyjisa.autoload`), and call `pyjisa.load(...)` directly, supplying the path like so:
 
 ```python
 import pyjisa
@@ -60,7 +62,7 @@ pyjisa.load("C:\\Program Files\\AdoptOpenJDK\\jdk-13.0.2.8-hotspot")
 If you have GUI elements open, then you may find that you need to tell python to wait for the GUI to be stopped like so:
 
 ```python
-import pyjisa; pyjisa.load();
+import pyjisa.autoload
 
 from jisa.gui import GUI, Plot
 

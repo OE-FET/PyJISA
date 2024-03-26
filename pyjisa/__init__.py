@@ -57,8 +57,15 @@ def shutdown():
         
         from jisa.gui import GUI
         
-        GUI.stopGUI()
-        jpype.shutdownJVM()
+        try:
+            GUI.stopGUI()
+        except:
+            pass
+        
+        try:
+            jpype.shutdownJVM()
+        except:
+            pass
 
 
 def updateJISA():
@@ -72,7 +79,7 @@ def installJVM():
     
     import jdk
     
-    print("No Java runtime found on system, downloading JRE 11...", end=" ", flush=True)
+    print("No Java Runtime Environment found on system, downloading JRE 11...", end=" ", flush=True)
     installed = jdk.install(version="11", jre=True, path=path)
     os.rename(installed, os.path.join(path, "JVM"))
     print("Done.")
