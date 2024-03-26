@@ -12,35 +12,49 @@ def load(jvmPath=None):
 
     if not jpype.isJVMStarted():
 
-        if jvmPath is None and os.path.exists(os.path.join(path, "JVM")):
-            jvmPath = os.path.join(path, "JVM")
-
-        complete = ""
-
-        if jvmPath is None:
-            complete = jpype.getDefaultJVMPath()
-            
-        else:
-            
-            linux = os.path.join(jvmPath, "lib", "server", "libjvm.so")
-            win = os.path.join(jvmPath, "bin", "server", "jvm.dll")
-            mac = os.path.join(jvmPath, "lib", "server", "libjvm.dylib")
-
-            if os.path.exists(linux):
-                complete = linux
-            elif os.path.exists(win):
-                complete = win
-            elif os.path.exists(mac):
-                complete = mac
+        javaPath = findJava(jvmPath)
 
 
-        if (complete == "") or (not os.path.exists(complete)):
+        if (javaPath is None) or (not os.path.exists(javaPath)):
             installJVM()
+            javaPath = findJava()
 
+
+        if not os.path.exists(os.path.join(path, "JISA.jar")):
+            updateJISA()
+            
+            
         # Start the JVM
-        jpype.startJVM(jvmpath=complete, convertStrings=True)
+        jpype.startJVM(jvmpath=javaPath, convertStrings=True)
 
         atexit.register(shutdown)
+        
+
+def findJava(jvmPath = None):
+    
+    if jvmPath is None and os.path.exists(os.path.join(path, "JVM")):
+        jvmPath = os.path.join(path, "JVM")
+
+    complete = ""
+
+    if jvmPath is None:
+        complete = jpype.getDefaultJVMPath()
+        
+    else:
+        
+        linux = os.path.join(jvmPath, "lib", "server", "libjvm.so")
+        win   = os.path.join(jvmPath, "bin", "server", "jvm.dll")
+        mac   = os.path.join(jvmPath, "lib", "server", "libjvm.dylib")
+
+        if os.path.exists(linux):
+            complete = linux
+        elif os.path.exists(win):
+            complete = win
+        elif os.path.exists(mac):
+            complete = mac
+            
+            
+    return complete if complete != "" else None
 
 
 def shutdown():
@@ -68,11 +82,7 @@ def installJVM():
     installed = jdk.install(version="11", jre=True, path=path)
     os.rename(installed, os.path.join(path, "JVM"))
     print("Done.")
-
     
-
-if not os.path.exists(os.path.join(path, "JISA.jar")):
-    updateJISA()
 
 # Link in JISA.jar classes
 jpype.addClassPath(os.path.join(path, "JISA.jar"))
