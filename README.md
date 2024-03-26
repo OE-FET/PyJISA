@@ -21,7 +21,7 @@ The first time you do this, it will download the JISA.jar file (which may take a
 few seconds). Also, if pyjisa is unable to find one installed on your system, it
 may also download a Java Runtime Environment (JRE):
 
-```python
+```
 >>> import pyjisa.autoload
 Downloading latest JISA.jar library... Done.
 No Java Runtime Environment found on system, downloading JRE 11... Done.
@@ -101,7 +101,7 @@ pyjisa.load("C:\\Program Files\\AdoptOpenJDK\\jdk-13.0.2.8-hotspot")
 You can tell pyjisa to download the latest version of the JISA.jar library by
 only importing `pyjisa` and calling `pyjisa.updateJISA()`:
 
-```python
+```
 >>> import pyjisa
 >>> pyjisa.updateJISA()
 Downloading latest JISA.jar library... Done.
