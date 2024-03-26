@@ -36,7 +36,7 @@ channelB.turnOn()
 
 ```
 
-The first time you do this, it will download the JISA.jar file (which may take a few seconds). If you want to update the library in the future then just call `updateJISA()` like so:
+The first time you do this, it will download the JISA.jar file (which may take a few seconds). If you don't have one installed, it may also download a Java Runtime Environment (JRE). If you want to update the library in the future then just call `updateJISA()` like so:
 
 ```python
 import pyjisa
