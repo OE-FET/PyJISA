@@ -2,37 +2,46 @@
 import os
 import jpype
 import jpype.imports
-import urllib.request
 import atexit
 from jpype import JProxy
 
+# Where are we?
 path = os.path.dirname(os.path.realpath(__file__))
 
 def load(jvmPath=None):
 
-    if not jpype.isJVMStarted():
+    if jpype.isJVMStarted():
+        return
 
-        javaPath = findJava(jvmPath)
+    javaPath = findJava(jvmPath)
 
-        if (javaPath is None) or (not os.path.exists(javaPath)):
-            installJVM()
-            javaPath = findJava()
-
-        # Start the JVM
-        jpype.startJVM(jvmpath=javaPath, convertStrings=True)
-
-        atexit.register(shutdown)
+    # If no java installation has been found, install our own JRE
+    if (javaPath is None) or (not os.path.exists(javaPath)):
+        javaPath = installJVM()
         
+    # Start the JVM
+    jpype.startJVM(jvmpath=javaPath, convertStrings=True)
+
+    # Make sure to shut everything down when Python exits
+    atexit.register(shutdown)
+
 
 def findJava(jvmPath = None):
     
-    if jvmPath is None and os.path.exists(os.path.join(path, "JVM")):
+    # If nothing was specified, and a local JRE is present, then use it
+    if (jvmPath is None) and (os.path.exists(os.path.join(path, "JVM"))):
         jvmPath = os.path.join(path, "JVM")
 
-    complete = ""
-
+    fullPath = None
+    
+    # If we still don't have a path, then get jpype to search for one
     if jvmPath is None:
-        complete = jpype.getDefaultJVMPath()
+        
+        try:
+            fullPath = jpype.getDefaultJVMPath()
+        except:
+            pass
+        
         
     else:
         
@@ -41,23 +50,22 @@ def findJava(jvmPath = None):
         mac   = os.path.join(jvmPath, "lib", "server", "libjvm.dylib")
 
         if os.path.exists(linux):
-            complete = linux
+            fullPath = linux 
         elif os.path.exists(win):
-            complete = win
+            fullPath = win
         elif os.path.exists(mac):
-            complete = mac
+            fullPath = mac
             
             
-    return complete if complete != "" else None
+    return fullPath
 
 
 def shutdown():
     
     if jpype.isJVMStarted():
         
-        from jisa.gui import GUI
-        
         try:
+            from jisa.gui import GUI
             GUI.stopGUI()
         except:
             pass
@@ -70,21 +78,30 @@ def shutdown():
 
 def updateJISA():
     
+    import urllib.request
+    
     print("Downloading latest JISA.jar library...", end=" ", flush=True)
+    
     urllib.request.urlretrieve("https://github.com/OE-FET/JISA/raw/master/JISA.jar", os.path.join(path, "JISA.jar"))
+    
     print("Done.")
 
 
-def installJVM():
+def installJVM() -> str:
     
     import jdk
     
     print("No Java Runtime Environment found on system, downloading JRE 11...", end=" ", flush=True)
+    
     installed = jdk.install(version="11", jre=True, path=path)
     os.rename(installed, os.path.join(path, "JVM"))
+    
     print("Done.")
+    
+    return os.path.join(path, "JVM")
 
 
+# If no JISA.jar file is present, download the latest
 if not os.path.exists(os.path.join(path, "JISA.jar")):
     updateJISA()
 
