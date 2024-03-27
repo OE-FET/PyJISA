@@ -98,7 +98,7 @@ def installJVM() -> str:
     
     print("Done.")
     
-    return os.path.join(path, "JVM")
+    return findJava(os.path.join(path, "JVM"))
 
 
 # If no JISA.jar file is present, download the latest
