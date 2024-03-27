@@ -34,7 +34,7 @@ After this, you're good to import `JISA` classes as if they were written in Pyth
 import pyjisa.autoload
 from jisa.gui import GUI
 
-GUI.infoAlert("It's working!")
+GUI.infoAlert("Hello World!")
 ```
 
 <p align="center"><img src="https://i.imgur.com/qpjpMHx.png"/><p>
