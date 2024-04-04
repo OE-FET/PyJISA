@@ -1,5 +1,5 @@
 # PyJISA
-Python package for easily setting up JISA for use in a CPython (i.e. normal Python) environment using JPype.
+Python package for easily setting up [JISA](https://github.com/OE-FET/JISA) for use in a CPython (i.e. normal Python) environment using JPype.
 
 ## Installation
 
