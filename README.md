@@ -1,4 +1,4 @@
-<p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" height="60"/> <img src="https://github.com/OE-FET/JISA/blob/master/logo.svg"/></p>
+<p align="center"><img src="pyjisalogo.svg"/></p>
 
 # PyJISA
 
