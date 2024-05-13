@@ -1,5 +1,7 @@
 <p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" height="60"/> <img src="https://github.com/OE-FET/JISA/blob/master/logo.svg"/></p>
 
+# PyJISA
+
 Python package for easily setting up [JISA](https://github.com/OE-FET/JISA) for use in a CPython (i.e. normal Python) environment using JPype.
 
 ## Installation
