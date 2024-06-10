@@ -89,12 +89,17 @@ def updateJISA():
 
 def installJVM() -> str:
     
+    from distutils.dir_util import copy_tree
+    from shutil import rmtree
+    
     import jdk
     
     print("No Java Runtime Environment found on system, downloading JRE 11...", end=" ", flush=True)
     
     installed = jdk.install(version="11", jre=True, path=path)
-    os.rename(installed, os.path.join(path, "JVM"))
+    
+    copy_tree(installed, os.path.join(path, "JVM"))
+    rmtree(installed, ignore_errors=True)
     
     print("Done.")
     
