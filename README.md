@@ -51,18 +51,33 @@ GUI.infoAlert("Hello World!")
 and, of course, you should be able to connect to and control your instruments:
 
 ```python
+# Initialise JISA library
 import pyjisa.autoload
+
+# Import JISA classes
 from jisa.devices.smu import K2612B
 from jisa.addresses import TCPIPAddress
 
+# Connect to Keithley 2612B dual-channel SMU over TCP-IP
 keithley = K2612B(TCPIPAddress("192.168.0.5", 5656))
 
+# Exctract each channel as its own SMU object
 channelA = keithley.getSMU(0)
 channelB = keithley.getSMU(1)
 
+# Configure channel A and tell it to source 5.0 V
+channelA.useAutoRanges()
+channelA.setIntegrationTime(20e-3)
+channelA.setFourProbeEnabled(False)
 channelA.setVoltage(5.0)
+
+# Configure channel B and tell it to source 0.5 A
+channelB.useAutoRanges()
+channelB.setIntegrationTime(20e-3)
+channelB.setFourProbeEnabled(False)
 channelB.setCurrent(500e-3)
 
+# Enable their outputs
 channelA.turnOn()
 channelB.turnOn()
 ```
