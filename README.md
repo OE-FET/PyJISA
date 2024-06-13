@@ -9,6 +9,12 @@ Python package for easily setting up [JISA](https://github.com/OE-FET/JISA) for 
 You can install this package by using PIP like so:
 
 ```
+pip install pyjisa
+```
+
+or, to get the latest version direct from this repository:
+
+```
 pip install git+https://github.com/OE-FET/PyJISA.git
 ```
 
