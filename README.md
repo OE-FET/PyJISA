@@ -104,9 +104,9 @@ GUI.waitForExit()
 This is because when reaching the end of a script, Python will exit even though
 the GUI thread is till running, as it cannot see running Java threads.
 
-To manually select which Java installation to use, just import `pyjisa` (not `pyjisa.autoload`), and call `pyjisa.load(...)` directly, supplying the path like so:
-
 ## Manually Select Java Runtime
+
+To manually select which Java installation to use, just import `pyjisa` (not `pyjisa.autoload`), and call `pyjisa.load(...)` directly, supplying the path like so:
 
 ```python
 import pyjisa
