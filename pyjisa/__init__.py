@@ -9,6 +9,8 @@ from jpype import JProxy
 path = os.path.dirname(os.path.realpath(__file__))
 
 def load(jvmPath=None):
+    
+    import site
 
     if jpype.isJVMStarted():
         return
@@ -24,6 +26,9 @@ def load(jvmPath=None):
 
     # Make sure to shut everything down when Python exits
     atexit.register(shutdown)
+    
+    if (not os.path.exists(os.path.join(site.getusersitepackages(), "jisa-stubs"))):
+        updateStubs()
 
 
 def findJava(jvmPath = None):
@@ -79,28 +84,26 @@ def shutdown():
 def updateStubs():
 
     import jisa
-    import site;
+    import site
     import stubgenj
     
-    
     print("Updating python stubs...", end=" ", flush=True)
-    
     stubgenj.generateJavaStubs([jisa], True, site.getusersitepackages())
-    
     print("Done.")
 
 
 def updateJISA():
 
     import urllib.request
+    import site
+    from shutil import rmtree
 
     print("Downloading latest JISA.jar library...", end=" ", flush=True)
 
-    urllib.request.urlretrieve("https://github.com/OE-FET/JISA/raw/master/JISA.jar", os.path.join(path, "JISA.jar"))
+    urllib.request.urlretrieve("https://github.com/OE-FET/JISA/raw/devices_revamp/JISA.jar", os.path.join(path, "JISA.jar"))
 
     print("Done.")
-
-    updateStubs()
+    rmtree(os.path.join(site.getusersitepackages(), "jisa-stubs"), ignore_errors=True)
     
 
 def installJVM() -> str:
