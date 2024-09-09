@@ -87,6 +87,20 @@ def updateJISA():
     print("Done.")
 
 
+def updateStubs():
+
+    import jisa
+    import site;
+    import stubgenj
+    
+    
+    print("Updating python stubs...", end=" ", flush=True)
+    
+    stubgenj.generateJavaStubs([jisa], True, site.getusersitepackages())
+    
+    print("Done.")
+    
+
 def installJVM() -> str:
     
     from distutils.dir_util import copy_tree

@@ -9,7 +9,7 @@ setup(
     author_email='waw31@cam.ac.uk',
     license='unlicense',
     packages=['pyjisa'],
-    install_requires=['jpype1','install-jdk','jisa-stubs'],
+    install_requires=['jpype1','install-jdk','stubgenj'],
     include_package_data=True,
     zip_safe=False
 )
