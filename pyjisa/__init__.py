@@ -76,17 +76,6 @@ def shutdown():
             pass
 
 
-def updateJISA():
-    
-    import urllib.request
-    
-    print("Downloading latest JISA.jar library...", end=" ", flush=True)
-    
-    urllib.request.urlretrieve("https://github.com/OE-FET/JISA/raw/master/JISA.jar", os.path.join(path, "JISA.jar"))
-    
-    print("Done.")
-
-
 def updateStubs():
 
     import jisa
@@ -99,6 +88,19 @@ def updateStubs():
     stubgenj.generateJavaStubs([jisa], True, site.getusersitepackages())
     
     print("Done.")
+
+
+def updateJISA():
+
+    import urllib.request
+
+    print("Downloading latest JISA.jar library...", end=" ", flush=True)
+
+    urllib.request.urlretrieve("https://github.com/OE-FET/JISA/raw/master/JISA.jar", os.path.join(path, "JISA.jar"))
+
+    print("Done.")
+
+    updateStubs()
     
 
 def installJVM() -> str:
