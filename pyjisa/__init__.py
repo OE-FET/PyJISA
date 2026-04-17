@@ -22,7 +22,7 @@ def load(jvmPath=None):
         javaPath = installJVM()
 
     # Start the JVM
-    jpype.startJVM(jvmpath=javaPath, convertStrings=True)
+    jpype.startJVM("-Xmx5g", jvmpath=javaPath, convertStrings=True)
 
     # Make sure to shut everything down when Python exits
     atexit.register(shutdown)
@@ -67,18 +67,11 @@ def findJava(jvmPath = None):
 
 def shutdown():
 
-    if jpype.isJVMStarted():
-
-        try:
-            from jisa.gui import GUI
-            GUI.stopGUI()
-        except:
-            pass
-
-        try:
-            jpype.shutdownJVM()
-        except:
-            pass
+    try:
+        from java.lang import System
+        System.exit(0)
+    except:
+        pass
 
 
 def updateStubs():
