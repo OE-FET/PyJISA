@@ -79,9 +79,10 @@ def updateStubs():
     import jisa
     import site
     import stubgenj
+    import java
 
     print("Updating python stubs...", end=" ", flush=True)
-    stubgenj.generateJavaStubs([jisa], True, str(site.getsitepackages()[0]))
+    stubgenj.generateJavaStubs([jisa, java], True, str(site.getsitepackages()[0]))
     print("Done.")
 
 
